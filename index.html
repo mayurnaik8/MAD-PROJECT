@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Task Manager | MAYUR CHANDRASHEKAR</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar glass">
+            <div class="profile-section">
+                <div class="profile-avatar">AG</div>
+                <h2>Ayush Gowda BH</h2>
+                <p>Student</p>
+            </div>
+
+            <nav class="navigation">
+                <ul>
+                    <li class="active"><a href="#dashboard"><i class="fas fa-home"></i> Dashboard</a></li>
+                    <li><a href="#tasks"><i class="fas fa-tasks"></i> Tasks</a></li>
+                    <li><a href="#pomodoro-widget"><i class="fas fa-clock"></i> Pomodoro</a></li>
+                </ul>
+            </nav>
+
+            <div class="theme-toggle">
+                <button id="theme-btn" class="btn"><i class="fas fa-moon"></i> Toggle Dark Mode</button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header section -->
+            <header class="top-header glass">
+                <div class="welcome-text">
+                    <h1>Welcome Back, Ayush Gowda BH 👋</h1>
+                    <p id="current-date-time">Loading date...</p>
+                </div>
+                <div class="quote-section">
+                    <p id="daily-quote">"Believe you can and you're halfway there."</p>
+                </div>
+            </header>
+
+            <!-- Dashboard Stats -->
+            <section id="dashboard" class="stats-grid">
+                <div class="stat-card glass">
+                    <div class="stat-icon"><i class="fas fa-list"></i></div>
+                    <div class="stat-details">
+                        <h3>Total Tasks</h3>
+                        <p id="total-tasks">0</p>
+                    </div>
+                </div>
+                <div class="stat-card glass">
+                    <div class="stat-icon pending-icon"><i class="fas fa-hourglass-half"></i></div>
+                    <div class="stat-details">
+                        <h3>Pending</h3>
+                        <p id="pending-tasks">0</p>
+                    </div>
+                </div>
+                <div class="stat-card glass">
+                    <div class="stat-icon completed-icon"><i class="fas fa-check-circle"></i></div>
+                    <div class="stat-details">
+                        <h3>Completed</h3>
+                        <p id="completed-tasks">0</p>
+                    </div>
+                </div>
+                <div class="stat-card glass">
+                    <div class="stat-icon streak-icon"><i class="fas fa-fire"></i></div>
+                    <div class="stat-details">
+                        <h3>Streak</h3>
+                        <p id="streak-counter">0 Days</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Progress Section -->
+            <section class="progress-section glass">
+                <div class="progress-header">
+                    <h3>Task Completion Progress</h3>
+                    <span id="progress-percentage">0%</span>
+                </div>
+                <div class="progress-bar-container">
+                    <div class="progress-bar" id="progress-bar"></div>
+                </div>
+            </section>
+
+            <!-- Interactive Sections Wrapper -->
+            <div class="content-grid">
+
+                <!-- Add Task Form -->
+                <section class="add-task-section glass">
+                    <h2><i class="fas fa-plus-circle"></i> Add New Task</h2>
+                    <form id="add-task-form">
+                        <div class="form-group">
+                            <label for="task-title">Title</label>
+                            <input type="text" id="task-title" required placeholder="e.g., Math Assignment">
+                        </div>
+                        <div class="form-group">
+                            <label for="task-desc">Description</label>
+                            <textarea id="task-desc" rows="3" placeholder="Task details..."></textarea>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group half">
+                                <label for="task-date">Due Date</label>
+                                <input type="date" id="task-date" required>
+                            </div>
+                            <div class="form-group half">
+                                <label for="task-priority">Priority</label>
+                                <select id="task-priority">
+                                    <option value="High">High</option>
+                                    <option value="Medium" selected>Medium</option>
+                                    <option value="Low">Low</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="task-subject">Subject/Category</label>
+                            <input type="text" id="task-subject" placeholder="e.g., Mathematics" required>
+                        </div>
+                        <button type="submit" class="submit-btn">Add Task</button>
+                    </form>
+                </section>
+
+                <!-- Tasks List & Filters -->
+                <section id="tasks" class="task-list-section glass">
+                    <div class="task-list-header">
+                        <h2>Your Tasks</h2>
+                        <div class="filters">
+                            <input type="text" id="search-task" placeholder="Search tasks...">
+                            <select id="filter-status">
+                                <option value="all">All Status</option>
+                                <option value="pending">Pending</option>
+                                <option value="completed">Completed</option>
+                            </select>
+                            <select id="filter-priority">
+                                <option value="all">All Priorities</option>
+                                <option value="High">High</option>
+                                <option value="Medium">Medium</option>
+                                <option value="Low">Low</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="tasks-container" id="tasks-container">
+                        <!-- Tasks will be injected here by JS -->
+                    </div>
+                </section>
+
+                <!-- Widgets -->
+                <aside class="widgets-section">
+                    <!-- Pomodoro -->
+                    <div id="pomodoro-widget" class="widget glass pomodoro">
+                        <h3>Pomodoro Timer</h3>
+                        <div class="timer-display" id="timer-display">25:00</div>
+                        <div class="timer-controls">
+                            <button id="start-timer" class="btn"><i class="fas fa-play"></i></button>
+                            <button id="pause-timer" class="btn"><i class="fas fa-pause"></i></button>
+                            <button id="reset-timer" class="btn"><i class="fas fa-redo"></i></button>
+                        </div>
+                    </div>
+
+                    <!-- Calendar Widget -->
+                    <div class="widget glass calendar-widget">
+                        <h3>Calendar Widget</h3>
+                        <div class="mini-calendar" id="mini-calendar">
+                            <!-- Basic visual calendar injected by JS -->
+                        </div>
+                    </div>
+                </aside>
+            </div>
+
+            <footer class="app-footer glass">
+                <p>Designed by Ayush Gowda BH</p>
+            </footer>
+        </main>
+    </div>
+
+    <!-- Edit Task Modal -->
+    <div id="edit-modal" class="modal">
+        <div class="modal-content glass">
+            <span class="close-modal">&times;</span>
+            <h2>Edit Task</h2>
+            <form id="edit-task-form">
+                <input type="hidden" id="edit-task-id">
+                <div class="form-group">
+                    <label for="edit-task-title">Title</label>
+                    <input type="text" id="edit-task-title" required>
+                </div>
+                <div class="form-group">
+                    <label for="edit-task-desc">Description</label>
+                    <textarea id="edit-task-desc" rows="3"></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group half">
+                        <label for="edit-task-date">Due Date</label>
+                        <input type="date" id="edit-task-date" required>
+                    </div>
+                    <div class="form-group half">
+                        <label for="edit-task-priority">Priority</label>
+                        <select id="edit-task-priority">
+                            <option value="High">High</option>
+                            <option value="Medium">Medium</option>
+                            <option value="Low">Low</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="edit-task-subject">Subject</label>
+                    <input type="text" id="edit-task-subject" required>
+                </div>
+                <button type="submit" class="submit-btn">Update Task</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="toast">Message</div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
